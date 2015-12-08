@@ -1,0 +1,19 @@
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+alias ls='ls --color=auto'
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias lt='ls -lrta'
+
+alias fff=xdg-open
+alias em='emacs -nw'
+alias py=python
+
+parse_git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+PS1="${debian_chroot:+($debian_chroot)}\e[0;32m\w\\e[m\e[01;34m\$(parse_git_branch)\e[m\e[31m$\e[m"
