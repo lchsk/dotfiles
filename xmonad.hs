@@ -38,7 +38,8 @@ myLayout = avoidStruts (
     spiral (6/7)) |||
     noBorders (fullscreenFull Full)
 
-myNormalBorderColor = "#7c7c7c"
+--myNormalBorderColor = "#7c7c7c"
+myNormalBorderColor = "#0f0f0f"
 myFocusedBorderColor = "#e32c57"
 
 myManageHook = composeAll
