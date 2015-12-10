@@ -1,5 +1,5 @@
 Config { 
-	font = "-*-Inconsolata-Bold-R-*-13"
+	font = "xft:Inconsolata-9"
 	--font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
        , bgColor = "#0f0f0f"
        , fgColor = "#c8c8c8"
