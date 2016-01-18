@@ -3,7 +3,7 @@ Config {
 	--font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
        , bgColor = "#0f0f0f"
        , fgColor = "#c8c8c8"
-       , position = TopW L 100
+       , position = BottomW L 100
        , commands = 
 	[ Run Weather "EGLL" ["-t"," <tempC>C","-L","64","-H","77","--normal","green","--high","red","--low","lightblue"] 36000
           , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
