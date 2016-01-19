@@ -9,7 +9,7 @@ Config {
           , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
           , Run Memory ["-t","Mem: <usedratio>%"] 10
           , Run Swap [] 10
-          , Run Date "%a %b %_d %l:%M" "date" 10
+          , Run Date "%a %b %_d %H:%M" "date" 10
           , Run StdinReader
           , Run CpuFreq [] 10
 	  --, Run Com "/home/lchsk/.volume.sh" [] "vol" 30
