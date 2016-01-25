@@ -16,43 +16,43 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+import XMonad.Layout.GridVariants
 
 myTerminal = "urxvt"
 myScreensaver = "slock"
 myScreenshot = "scrot"
-myWorkspaces = ["1: web","2: code","3: term","4: db","5: mail"] ++ map show [6..9]
+myWorkspaces = ["1","2","3","4","5"] ++ map show [6..9]
 
 -- The command to use as a launcher, to launch commands that don't have
 -- preset keybindings.
 --myLauncher = "$(yeganesh -x -- -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso8859-*' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
-myLauncher = "dmenu_run -b"
+myLauncher = "dmenu_run -b -fn 'xft:Insonsolata-11'"
 
 -------
 
 myLayout = avoidStruts (
-    ThreeColMid 1 (3/100) (1/2) |||
+    SplitGrid XMonad.Layout.GridVariants.L 2 3 (2/3) (16/10) (5/100) |||
+    ThreeColMid 0 (3/100) (1/3) |||
     Tall 1 (3/100) (1/2) |||
     Mirror (Tall 1 (3/100) (1/2)) |||
     tabbed shrinkText tabConfig |||
-    Full |||
-    spiral (6/7)) |||
+    Full) |||
     noBorders (fullscreenFull Full)
 
---myNormalBorderColor = "#7c7c7c"
-myNormalBorderColor = "#0f0f0f"
+myNormalBorderColor = "#7c7c7c"
 myFocusedBorderColor = "#e32c57"
 
 myManageHook = composeAll
-    [ className =? "Chromium"       --> doShift "1: web"
-    , className =? "Google-chrome"  --> doShift "1: web"
+    [ className =? "Chromium"       --> doShift "1"
+    , className =? "Google-chrome"  --> doShift "1"
     , resource  =? "desktop_window" --> doIgnore
     , className =? "Galculator"     --> doFloat
     , className =? "Steam"          --> doFloat
     , className =? "Gimp"           --> doFloat
     , resource  =? "gpicview"       --> doFloat
     , className =? "MPlayer"        --> doFloat
-    , className =? "VirtualBox"     --> doShift "4:vm"
-    , className =? "thunderbird"    --> doShift "5: mail"
+    , className =? "VirtualBox"     --> doShift "4"
+    , className =? "thunderbird"    --> doShift "5"
     , className =? "stalonetray"    --> doIgnore
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
 
@@ -190,6 +190,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_l),
      sendMessage Expand)
 
+  ,  ((modMask .|. shiftMask, xK_equal), sendMessage $ IncMasterCols 1),
+ ((modMask .|. shiftMask, xK_minus), sendMessage $ IncMasterCols (-1)),
+ ((modMask .|. controlMask,  xK_equal), sendMessage $ IncMasterRows 1),
+ ((modMask .|. controlMask,  xK_minus), sendMessage $ IncMasterRows (-1))
+
   -- Push window back into tiling.
   , ((modMask, xK_t),
      withFocused $ windows . W.sink)
@@ -289,28 +294,3 @@ defaults = defaultConfig {
     startupHook        = myStartupHook
 }
 
-
-
---main = do
---    xmproc <- spawnPipe "xmobar"
-
---    xmonad $ defaultConfig
---        { manageHook = manageDocks <+> manageHook defaultConfig
---        , layoutHook = avoidStruts  $  layoutHook defaultConfig
---        , modMask = mod4Mask
---	, terminal = "urxvt"
---	 , logHook = dynamicLogWithPP xmobarPP
---                       { ppOutput = hPutStrLn xmproc
---                        , ppTitle = xmobarColor "white" "" . shorten 50
---                        }
-        
---        } `additionalKeys`
---        [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock; xset dpms force off")
---        , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
---        , ((0, xK_Print), spawn "scrot")
---	, ((mod1Mask, xK_F6), spawn "amixer -D pulse set Master toggle")
---	, ((mod1Mask, xK_F7), spawn "amixer -D pulse set Master 1%-")
---	, ((mod1Mask, xK_F8), spawn "amixer -D pulse set Master 1%+")
-
-	
---        ]
