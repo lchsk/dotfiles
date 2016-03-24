@@ -27,13 +27,14 @@ myWorkspaces = ["1","2","3","4","5"] ++ map show [6..9]
 -- preset keybindings.
 --myLauncher = "$(yeganesh -x -- -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso8859-*' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
 myLauncher = "dmenu_run -b -fn 'xft:Insonsolata-11'"
-
+--myLauncher = "/home/lchsk/projects/xstarter/bin/xstarter"
+myTray = "trayer --SetDockType false --SetPartialStrut false"
 -------
 
 myLayout = avoidStruts (
-    SplitGrid XMonad.Layout.GridVariants.L 2 3 (2/3) (16/10) (5/100) |||
-    ThreeColMid 0 (3/100) (1/3) |||
+ --   SplitGrid XMonad.Layout.GridVariants.L 2 3 (2/3) (16/10) (5/100) |||
     Tall 1 (3/100) (1/2) |||
+    ThreeColMid 0 (3/100) (1/3) |||
     Mirror (Tall 1 (3/100) (1/2)) |||
     tabbed shrinkText tabConfig |||
     Full) |||
