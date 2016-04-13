@@ -10,7 +10,7 @@ alias l='ls -CF'
 alias lt='ls -lrta'
 
 alias fff=xdg-open
-alias em='emacs -nw'
+alias em=emacsclient
 alias py=python
 alias gits='git status'
 alias psa='ps aux | grep'
