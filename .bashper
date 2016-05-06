@@ -16,7 +16,7 @@ alias emc='emacsclient'
 alias emct='emacsclient -t'
 alias emq='emacs -Q'
 alias emt='emacs -nw'
-alias emqt='emacs -Q -nw'
+alias emtq='emacs -Q -nw'
 
 alias py=python
 alias gits='git status'
