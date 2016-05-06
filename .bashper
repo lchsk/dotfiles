@@ -10,10 +10,17 @@ alias l='ls -CF'
 alias lt='ls -lrta'
 
 alias fff=xdg-open
-alias em=emacsclient
-alias emt=emacsclient -t
+
+alias em='emacs'
+alias emc='emacsclient'
+alias emct='emacsclient -t'
+alias emq='emacs -Q'
+alias emt='emacs -nw'
+alias emqt='emacs -Q -nw'
+
 alias py=python
 alias gits='git status'
+alias gitc='git checkout'
 alias psa='ps aux | grep'
 alias kill9='kill -9'
 
