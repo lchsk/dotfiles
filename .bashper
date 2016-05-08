@@ -24,7 +24,7 @@ alias gitc='git checkout'
 alias psa='ps aux | grep'
 alias kill9='kill -9'
 
-export EDITOR=emacsclient -t
+export EDITOR="emacsclient -t"
 
 # Configure colors, if available.
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
