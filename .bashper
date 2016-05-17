@@ -4,7 +4,7 @@ alias egrep='egrep --color=auto'
 
 alias ls='ls --color=auto'
 
-alias ll='ls -alF'
+alias ll='ls -alhF'
 alias la='ls -A'
 alias l='ls -CF'
 alias lt='ls -lrta'
@@ -15,8 +15,7 @@ alias em='emacs'
 alias emc='emacsclient'
 alias emct='emacsclient -t'
 alias emq='emacs -Q'
-alias emt='emacs -nw'
-alias emtq='emacs -Q -nw'
+alias emt='emacs -Q -nw'
 
 alias py=python
 alias gits='git status'
@@ -65,3 +64,13 @@ git_prompt ()
 #PS1="\[\e[0;32m\]\w\\[\e[m\e[01;34m\]\[\$(git_prompt)\]\[\e[m\e[31m\]$\[\e[m\]"
 
 PROMPT_COMMAND='PS1="${c_path}\w${c_reset}$(git_prompt)\$ "'
+
+cd() {
+    if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
+        command cd "$@"
+        tmux rename-window "$PWD"
+        tmux set-window-option automatic-rename "off" 1>/dev/null
+    else
+        command cd "$@"
+    fi
+}
