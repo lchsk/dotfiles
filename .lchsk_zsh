@@ -1,0 +1,72 @@
+# grep
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# File listing
+
+alias ls='ls --color=auto'
+alias ll='ls -alhF'
+alias la='ls -A'
+alias l='ls -CF'
+alias lt='ls -lrta'
+
+# Emacs
+
+alias em='emacs'
+alias emc='emacsclient'
+alias emct='emacsclient -t'
+alias emq='emacs -Q'
+alias emt='emacs -Q -nw'
+
+# git
+
+alias gits='git status'
+alias gitc='git checkout'
+alias gitp='git pull --no-tags'
+alias gitf='git fetch --no-tags'
+
+# python
+
+alias py='python'
+alias py2='python2'
+alias py3='python3'
+export PYTHONDONTWRITEBYTECODE=true
+
+# Misc
+
+alias psa='ps aux | grep'
+alias kill9='kill -9'
+alias fff='xdg-open'
+export EDITOR="emacsclient"
+
+# Search history
+
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+[[ -n "${key[Up]}"   ]] && bindkey "${key[Up]}"   up-line-or-beginning-search
+[[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
+
+# Remember recent directories
+
+DIRSTACKFILE="$HOME/.zsh_dirs"
+if [[ -f $DIRSTACKFILE ]] && [[ $#dirstack -eq 0 ]]; then
+  dirstack=( ${(f)"$(< $DIRSTACKFILE)"} )
+  [[ -d $dirstack[1] ]] && cd $dirstack[1]
+fi
+chpwd() {
+  print -l $PWD ${(u)dirstack} >$DIRSTACKFILE
+}
+
+DIRSTACKSIZE=20
+
+setopt AUTO_PUSHD PUSHD_SILENT PUSHD_TO_HOME
+
+## Remove duplicate entries
+setopt PUSHD_IGNORE_DUPS
+
+## This reverts the +/- operators.
+setopt PUSHD_MINUS
