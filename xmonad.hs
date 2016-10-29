@@ -21,18 +21,15 @@ import XMonad.Layout.GridVariants
 myTerminal = "urxvt"
 myScreensaver = "slock"
 myScreenshot = "scrot"
-myWorkspaces = ["1","2","3","4","5"] ++ map show [6..9]
 
--- The command to use as a launcher, to launch commands that don't have
--- preset keybindings.
---myLauncher = "$(yeganesh -x -- -fn '-*-terminus-*-r-normal-*-*-120-*-*-*-*-iso8859-*' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC')"
-myLauncher = "dmenu_run -b -fn 'xft:Insonsolata-11'"
---myLauncher = "/home/lchsk/projects/xstarter/bin/xstarter"
+myExtraWorkspaces = [(xK_0, "0"), (xK_minus, "-"), (xK_equal, "=")]
+myWorkspaces = map show [1..9]  ++ (map snd myExtraWorkspaces)
+
+myLauncher = "~/projects/xstarter/bin/xstarter_run"
 myTray = "trayer --SetDockType false --SetPartialStrut false"
 -------
 
 myLayout = avoidStruts (
- --   SplitGrid XMonad.Layout.GridVariants.L 2 3 (2/3) (16/10) (5/100) |||
     Tall 1 (3/100) (1/2) |||
     ThreeColMid 0 (3/100) (1/3) |||
     Mirror (Tall 1 (3/100) (1/2)) |||
@@ -50,6 +47,7 @@ myManageHook = composeAll
     , className =? "Galculator"     --> doFloat
     , className =? "Steam"          --> doFloat
     , className =? "Gimp"           --> doFloat
+    , className =? "knights"        --> doFloat
     , resource  =? "gpicview"       --> doFloat
     , className =? "MPlayer"        --> doFloat
     , className =? "VirtualBox"     --> doShift "4"
@@ -233,6 +231,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
+  ++ [
+        ((myModMask, key), (windows $ W.greedyView ws))
+        | (key,ws) <- myExtraWorkspaces
+      ] ++ [
+        ((myModMask .|. shiftMask, key), (windows $ W.shift ws))
+        | (key,ws) <- myExtraWorkspaces
+      ]
+
 
 
 -- Mouse bindings
