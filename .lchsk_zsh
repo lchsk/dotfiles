@@ -41,6 +41,9 @@ alias kill9='kill -9'
 alias fff='xdg-open'
 export EDITOR="emacsclient"
 
+export GOROOT=/usr/local/go
+export PATH=$PATH:$GOROOT/bin
+
 # Search history
 
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
