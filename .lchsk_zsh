@@ -26,6 +26,7 @@ alias gits='git status'
 alias gitc='git checkout'
 alias gitp='git pull --no-tags'
 alias gitf='git fetch --no-tags'
+alias glod='git log --graph --pretty="%Cgreen%h%Creset%Cblue%d%Creset %Cred%an%Creset: %s"'
 
 # python
 
