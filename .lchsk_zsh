@@ -41,6 +41,7 @@ alias psa='ps aux | grep'
 alias kill9='kill -9'
 alias fff='xdg-open'
 export EDITOR="emacsclient"
+export TERM=xterm-256color
 
 export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
