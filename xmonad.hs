@@ -19,13 +19,14 @@ import qualified Data.Map        as M
 import XMonad.Layout.GridVariants
 
 myTerminal = "urxvt"
+myFloatingTerminal = "urxvt -name urxvtfloat"
 myScreensaver = "slock"
 myScreenshot = "scrot"
 
 myExtraWorkspaces = [(xK_0, "0"), (xK_minus, "-"), (xK_equal, "=")]
 myWorkspaces = map show [1..9]  ++ (map snd myExtraWorkspaces)
 
-myLauncher = "~/projects/xstarter/bin/xstarter_run"
+myLauncher = "~/projects/xstarter/bin/xstarter"
 myTray = "trayer --SetDockType false --SetPartialStrut false"
 -------
 
@@ -50,10 +51,12 @@ myManageHook = composeAll
     , className =? "knights"        --> doFloat
     , resource  =? "gpicview"       --> doFloat
     , className =? "MPlayer"        --> doFloat
+    , title     =? "urxvtfloat"     --> doFloat
     , className =? "VirtualBox"     --> doShift "4"
     , className =? "thunderbird"    --> doShift "5"
     , className =? "stalonetray"    --> doIgnore
-    , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
+    , isFullscreen --> (doF W.focusDown <+> doFullFloat)
+    ]
 
 -- Colors for text and backgrounds of each tab when in "Tabbed" layout.
 tabConfig = defaultTheme {
@@ -88,9 +91,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ ((modMask .|. shiftMask, xK_Return),
      spawn $ XMonad.terminal conf)
 
+  , ((modMask .|. shiftMask, xK_f),
+     spawn myFloatingTerminal)
+
   -- Lock the screen using command specified by myScreensaver.
-  , ((modMask .|. controlMask, xK_l),
-     spawn myScreensaver)
+  -- , ((modMask .|. controlMask, xK_l),
+     -- spawn myScreensaver)
 
   -- Spawn the launcher using command specified by myLauncher.
   -- Use this to launch programs without a key binding.
