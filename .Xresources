@@ -2,7 +2,8 @@ URxvt.perl-lib: /home/lchsk/perl/
 ! Using XLFD (created via e.g. xfontsel)
 ! URxvt*font:           -misc-fixed-medium-r-semicondensed-*-12-90-100-*-c-60-iso8859-1
 ! Using Xft
-URxvt*font:           xft:Inconsolata:size=10
+! URxvt*font:           xft:Inconsolata:size=10
+URxvt*font:           xft:Iosevka:size=11
 
 !-*-{ Xft settings
 Xft*dpi:       96
