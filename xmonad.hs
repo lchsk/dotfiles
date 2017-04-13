@@ -19,7 +19,7 @@ import qualified Data.Map        as M
 import XMonad.Layout.GridVariants
 
 myTerminal = "urxvt"
-myFloatingTerminal = "urxvt -name urxvtfloat"
+myFloatingTerminal = "urxvt -name urxvtfloat --geometry 115x45"
 myScreensaver = "slock"
 myScreenshot = "scrot"
 
