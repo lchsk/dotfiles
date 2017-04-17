@@ -40,6 +40,7 @@ export PYTHONDONTWRITEBYTECODE=true
 alias psa='ps aux | grep'
 alias kill9='kill -9'
 alias fff='xdg-open'
+alias xs='~/bin/xstarter/bin/xstarter'
 export EDITOR="emacsclient"
 export TERM=xterm-256color
 
