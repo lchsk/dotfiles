@@ -1,6 +1,7 @@
 import System.IO
 import System.Exit
 import XMonad
+import XMonad.Util.Cursor
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -22,61 +23,85 @@ myTerminal = "urxvt"
 myFloatingTerminal = "urxvt -name urxvtfloat --geometry 115x30"
 myScreensaver = "i3lock -u -t"
 myScreenshot = "scrot"
+myRecompile = "killall conky dzen2 && xmonad --recompile; xmonad --restart; notify-send 'xmonad recompiled <3'"
+myRestart = "killall conky dzen2 && xmonad --restart; notify-send 'xmonad restarted <3'"
 
-myExtraWorkspaces = [(xK_0, "0"), (xK_minus, "-"), (xK_equal, "=")]
+myExtraWorkspaces = [
+  (xK_0, "0"),
+  (xK_minus, "-"),
+  (xK_equal, "="),
+  (xK_a, "a"),
+  (xK_s, "s"),
+  (xK_d, "d"),
+  (xK_j, "j"),
+  -- (xK_k, "k"),
+  (xK_l, "l")
+  ]
 myWorkspaces = map show [1..9]  ++ (map snd myExtraWorkspaces)
 
-myLauncher = "~/projects/xstarter/bin/xstarter"
-myTray = "trayer --SetDockType false --SetPartialStrut false"
--------
+myLauncher = "xstarter || ~/xstarter/bin/xstarter"
 
 myLayout = avoidStruts (
     Tall 1 (3/100) (1/2) |||
+    noBorders (tabbed shrinkText tabConfig) |||
     ThreeColMid 0 (3/100) (1/3) |||
-    Mirror (Tall 1 (3/100) (1/2)) |||
-    tabbed shrinkText tabConfig |||
-    Full) |||
+    Mirror (Tall 1 (3/100) (1/2))
+    -- ||| Full
+    ) |||
     noBorders (fullscreenFull Full)
 
-myNormalBorderColor = "#7c7c7c"
-myFocusedBorderColor = "#e32c57"
+
+color1 = "#eab700"
+color2 = "#2ecc71"
+black = "#000000"
+white = "#bbbbbb"
+grey = "#444444"
+
+-- myNormalBorderColor = "#7c7c7c"
+myNormalBorderColor = grey
+-- myFocusedBorderColor = "#e32c57"
+myFocusedBorderColor = white
+
+tabbedFont = "xft:Inconsolata:pixelsize=12"
+
+-- Colors for text and backgrounds of each tab when in "Tabbed" layout.
+tabConfig = defaultTheme {
+  fontName = tabbedFont,
+    activeBorderColor = color1,
+    activeTextColor = black,
+    activeColor = color1,
+    inactiveBorderColor = grey,
+    inactiveTextColor = black,
+    inactiveColor = grey
+}
 
 myManageHook = composeAll
-    [ className =? "Chromium"       --> doShift "1"
-    , className =? "Google-chrome"  --> doShift "1"
-    , resource  =? "desktop_window" --> doIgnore
-    , className =? "Galculator"     --> doFloat
-    , className =? "Steam"          --> doFloat
-    , className =? "Gimp"           --> doFloat
+               [
+    -- [ className =? "Chromium"       --> doShift "1"
+    -- , className =? "Google-chrome"  --> doShift "1"
+    resource  =? "desktop_window" --> doIgnore
+    -- , className =? "Galculator"     --> doFloat
+    -- , className =? "Steam"          --> doFloat
+    -- , className =? "Gimp"           --> doFloat
     , className =? "knights"        --> doFloat
     , title     =? "xstarter"       --> doFloat
     , resource  =? "gpicview"       --> doFloat
     , className =? "MPlayer"        --> doFloat
     , title     =? "urxvtfloat"     --> doFloat
-    , className =? "VirtualBox"     --> doShift "4"
-    , className =? "thunderbird"    --> doShift "5"
+    -- , className =? "VirtualBox"     --> doShift "4"
+    -- , className =? "thunderbird"    --> doShift "5"
     , className =? "stalonetray"    --> doIgnore
-    , isFullscreen --> (doF W.focusDown <+> doFullFloat)
+    -- , isFullscreen --> (doF W.focusDown <+> doFullFloat)
     ]
 
--- Colors for text and backgrounds of each tab when in "Tabbed" layout.
-tabConfig = defaultTheme {
-    activeBorderColor = "#7C7C7C",
-    activeTextColor = "#CEFFAC",
-    activeColor = "#000000",
-    inactiveBorderColor = "#7C7C7C",
-    inactiveTextColor = "#EEEEEE",
-    inactiveColor = "#000000"
-}
-
 -- Color of current window title in xmobar.
-xmobarTitleColor = "#e32c57"
+-- xmobarTitleColor = "#e32c57"
 
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#eb4509"
+-- xmobarCurrentWorkspaceColor = "#eb4509"
 
 -- Width of the window border in pixels.
-myBorderWidth = 2
+myBorderWidth = 1
 
 leftAlt = mod1Mask
 rightAlt = mod3Mask
@@ -95,9 +120,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. shiftMask, xK_f),
      spawn myFloatingTerminal)
 
-  Lock the screen using command specified by myScreensaver.
+  -- Lock the screen using command specified by myScreensaver.
   , ((modMask .|. controlMask, xK_l),
      spawn myScreensaver)
+
+  -- , ((modMask .|. controlMask, xK_o),
+     -- spawn "xmobar ~/.xmonad/xmobar.hs -d")
 
   -- Spawn the launcher using command specified by myLauncher.
   -- Use this to launch programs without a key binding.
@@ -118,11 +146,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Decrease volume.
   , ((modMask .|. controlMask, xK_j),
-     spawn "amixer -D pulse set Master 10%-")
+     spawn "amixer -D pulse set Master 5%-")
 
   -- Increase volume.
   , ((modMask .|. controlMask, xK_k),
-     spawn "amixer -D pulse set Master 10%+")
+     spawn "amixer -D pulse set Master 5%+")
 
   -- Audio previous.
   , ((0, 0x1008FF16),
@@ -197,9 +225,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      sendMessage Expand)
 
   ,  ((modMask .|. shiftMask, xK_equal), sendMessage $ IncMasterCols 1),
- ((modMask .|. shiftMask, xK_minus), sendMessage $ IncMasterCols (-1)),
- ((modMask .|. controlMask,  xK_equal), sendMessage $ IncMasterRows 1),
- ((modMask .|. controlMask,  xK_minus), sendMessage $ IncMasterRows (-1))
+     ((modMask .|. shiftMask, xK_minus), sendMessage $ IncMasterCols (-1)),
+     ((modMask .|. controlMask,  xK_equal), sendMessage $ IncMasterRows 1),
+     ((modMask .|. controlMask,  xK_minus), sendMessage $ IncMasterRows (-1))
 
   -- Push window back into tiling.
   , ((modMask, xK_t),
@@ -222,7 +250,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Restart xmonad.
   , ((modMask, xK_q),
-     restart "xmonad" True)
+     -- restart "xmonad" True)
+     spawn myRecompile)
   ]
   ++
 
@@ -273,19 +302,75 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
   ]
 
-myStartupHook = return ()
+-- myStartupHook = return ()
+myStartupHook = do
+  setDefaultCursor xC_left_ptr
+  setWMName "LG3D"
+
+myLogHook h = dynamicLogWithPP $ defaultPP
+
+    -- current workspace
+    { ppCurrent         = dzenColor black color1 . pad
+
+    -- workspaces which contain windows
+    , ppHidden          = dzenColor white black . pad
+
+    -- other workspaces
+    -- , ppHiddenNoWindows = dzenColor "#606060" "" . pad
+
+    -- , ppLayout          = dzenColor "#ff00ff" "" . pad
+    -- , ppLayout = wrap "^ca(1,xdotool key super+space)" "^ca()" . dzenColor "#ff00ff" "" .
+              -- (\x -> case x of
+                  -- "tile" -> "^i(~/dotfiles/xbm/tile.xbm)"
+                  -- "mtile" -> "^i(~/dotfiles/xbm/tile.xbm) M"
+                  -- "btile" -> "^i(~/dotfiles/xbm/tile.xbm) B"
+                  -- "Full" -> "^i(/home//dotfiles/xbm/full.xbm)"
+                  -- )
+    , ppLayout  = dzenColor color1 black . (\layout -> case layout of
+      "Tall"            -> "[|]"
+      "ThreeCol"        -> "[3]"
+      "Mirror Tall"     -> "[-]"
+      "Tabbed Simplest" -> "[T]"
+      "Full"            -> "[F]"
+      otherwise         -> layout
+      )
+    -- if a window on a hidden workspace needs my attention, color it so
+    , ppUrgent          = dzenColor "#ff0000" "" . pad . dzenStrip
+
+    , ppVisible = dzenColor color1 black . pad
+
+    -- shorten if it goes over 100 characters
+    , ppTitle           = dzenColor white black . shorten 100
+
+    -- no separator between workspaces
+    , ppWsSep           = ""
+
+    -- put a few spaces between each object
+    , ppSep             = " "
+
+    -- output to the handle we were given as an argument
+    , ppOutput          = hPutStrLn h
+    }
 
 main = do
-  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs -d"
+  -- xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs -d"
+  leftBar <- spawnPipe "dzen2 || ~/bin/dzen2 -fn 'Inconsolata-11' -x 0 -y -1 -w 800 -ta 'l'"
+  rightBar <- spawnPipe "conky -c ~/dotfiles/conky | `dzen2 || ~/bin/dzen2 -x 800 -y -1 -fn 'Inconsolata-11' -ta 'r'`"
+
   xmonad $ defaults {
-      logHook = dynamicLogWithPP $ xmobarPP {
-            ppOutput = hPutStrLn xmproc
-          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
-          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-          , ppSep = "   "
-      }
+      -- logHook = dynamicLogWithPP $ xmobarPP {
+      -- logHook = dynamicLogWithPP $ defaultPP {
+            -- ppOutput = hPutStrLn xmproc1
+          -- , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
+          -- , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+          -- , ppCurrent = xmobarColor "#ebac54" ""
+          -- , ppCurrent = xmobarColor "#ff00ff" ""
+          -- , ppWsSep = " "
+          -- , ppSep = " | "
+        -- }
+    logHook = myLogHook leftBar
       , manageHook = manageDocks <+> myManageHook
-      , startupHook = setWMName "LG3D"
+      -- , startupHook = setWMName "LG3D"
   
 }
 
