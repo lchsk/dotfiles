@@ -19,8 +19,8 @@ import qualified Data.Map        as M
 import XMonad.Layout.GridVariants
 
 myTerminal = "urxvt"
-myFloatingTerminal = "urxvt -name urxvtfloat --geometry 115x45"
-myScreensaver = "slock"
+myFloatingTerminal = "urxvt -name urxvtfloat --geometry 115x30"
+myScreensaver = "i3lock -u -t"
 myScreenshot = "scrot"
 
 myExtraWorkspaces = [(xK_0, "0"), (xK_minus, "-"), (xK_equal, "=")]
@@ -49,6 +49,7 @@ myManageHook = composeAll
     , className =? "Steam"          --> doFloat
     , className =? "Gimp"           --> doFloat
     , className =? "knights"        --> doFloat
+    , title     =? "xstarter"       --> doFloat
     , resource  =? "gpicview"       --> doFloat
     , className =? "MPlayer"        --> doFloat
     , title     =? "urxvtfloat"     --> doFloat
@@ -94,9 +95,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. shiftMask, xK_f),
      spawn myFloatingTerminal)
 
-  -- Lock the screen using command specified by myScreensaver.
-  -- , ((modMask .|. controlMask, xK_l),
-     -- spawn myScreensaver)
+  Lock the screen using command specified by myScreensaver.
+  , ((modMask .|. controlMask, xK_l),
+     spawn myScreensaver)
 
   -- Spawn the launcher using command specified by myLauncher.
   -- Use this to launch programs without a key binding.
@@ -275,7 +276,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 myStartupHook = return ()
 
 main = do
-  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
+  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs -d"
   xmonad $ defaults {
       logHook = dynamicLogWithPP $ xmobarPP {
             ppOutput = hPutStrLn xmproc
