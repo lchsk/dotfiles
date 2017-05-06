@@ -1,0 +1,24 @@
+# conkyrc for dzen
+# Slow, relatively rarely updated information
+
+update_interval 30
+background no
+out_to_console yes
+out_to_x no
+override_utf8_locale yes
+total_run_times 0
+double_buffer yes
+format_human_readable yes
+
+TEXT
+${time %H:%M} \
+^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/clock.xbm)^fg() \
+${time %A %d %b} \
+^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/wifi_02.xbm) \
+^ca()^fg()${execi 180 ~/dotfiles/scripts/net.sh} \
+^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/diskette.xbm)^ca()^fg() \
+${fs_free} \
+^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/bat_full_01.xbm)^ca()^fg() \
+${execi 300 ~/dotfiles/scripts/battery.sh} \
+^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/pacman.xbm)^ca()^fg() \
+${uptime_short}
