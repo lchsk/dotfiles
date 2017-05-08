@@ -15,9 +15,11 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
+import Control.Monad (liftM2)
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import XMonad.Layout.GridVariants
+import XMonad.Config.Xfce
 
 myTerminal = "urxvt"
 myFloatingTerminal = "urxvt -name urxvtfloat --geometry 115x30"
@@ -25,21 +27,33 @@ myScreensaver = "i3lock -u -t"
 myScreenshot = "scrot"
 myRecompile = "killall conky dzen2 && xmonad --recompile; xmonad --restart; notify-send 'xmonad recompiled <3'"
 myRestart = "killall conky dzen2 && xmonad --restart; notify-send 'xmonad restarted <3'"
+myLauncher = "(which xstarter && urxvt -e xstarter) || urxvt -e ~/xstarter/bin/xstarter"
 
 myExtraWorkspaces = [
-  (xK_0, "0"),
-  (xK_minus, "-"),
-  (xK_equal, "="),
   (xK_a, "a"),
   (xK_s, "s"),
   (xK_d, "d"),
-  (xK_j, "j"),
-  -- (xK_k, "k"),
-  (xK_l, "l")
-  ]
-myWorkspaces = map show [1..9]  ++ (map snd myExtraWorkspaces)
+  (xK_z, "z"),
+  (xK_x, "x"),
 
-myLauncher = "xstarter || ~/xstarter/bin/xstarter"
+  (xK_grave, "`"),
+  (xK_1, "1"),
+  (xK_2, "2"),
+  (xK_3, "3"),
+  (xK_4, "4"),
+  (xK_5, "5"),
+  (xK_6, "6"),
+  (xK_7, "7"),
+  (xK_8, "8"),
+  (xK_9, "9"),
+  (xK_0, "0"),
+  (xK_minus, "-"),
+  (xK_equal, "="),
+
+  (xK_f, "f")
+  ]
+
+myWorkspaces = map snd myExtraWorkspaces
 
 myLayout = avoidStruts (
     Tall 1 (3/100) (1/2) |||
@@ -50,16 +64,13 @@ myLayout = avoidStruts (
     ) |||
     noBorders (fullscreenFull Full)
 
-
 color1 = "#eab700"
 color2 = "#2ecc71"
 black = "#000000"
 white = "#bbbbbb"
 grey = "#444444"
 
--- myNormalBorderColor = "#7c7c7c"
 myNormalBorderColor = grey
--- myFocusedBorderColor = "#e32c57"
 myFocusedBorderColor = white
 
 tabbedFont = "xft:Inconsolata:pixelsize=12"
@@ -76,29 +87,18 @@ tabConfig = defaultTheme {
 }
 
 myManageHook = composeAll
-               [
-    -- [ className =? "Chromium"       --> doShift "1"
-    -- , className =? "Google-chrome"  --> doShift "1"
+  [
     resource  =? "desktop_window" --> doIgnore
-    -- , className =? "Galculator"     --> doFloat
-    -- , className =? "Steam"          --> doFloat
-    -- , className =? "Gimp"           --> doFloat
-    , className =? "knights"        --> doFloat
-    , title     =? "xstarter"       --> doFloat
-    , resource  =? "gpicview"       --> doFloat
-    , className =? "MPlayer"        --> doFloat
-    , title     =? "urxvtfloat"     --> doFloat
-    -- , className =? "VirtualBox"     --> doShift "4"
-    -- , className =? "thunderbird"    --> doShift "5"
-    , className =? "stalonetray"    --> doIgnore
-    -- , isFullscreen --> (doF W.focusDown <+> doFullFloat)
-    ]
-
--- Color of current window title in xmobar.
--- xmobarTitleColor = "#e32c57"
-
--- Color of current workspace in xmobar.
--- xmobarCurrentWorkspaceColor = "#eb4509"
+  , className =? "knights"        --> doFloat
+  , title     =? "xstarter"       --> doFloat
+  , resource  =? "gpicview"       --> doFloat
+  , className =? "mpv"            --> viewShift "f"
+  , title     =? "SMPlayer"       --> viewShift "f"
+  , title     =? "Okular"         --> viewShift "`"
+  , title     =? "urxvtfloat"     --> doFloat
+  , isFullscreen --> (doF W.focusDown <+> doFullFloat)
+  ]
+  where viewShift = doF . liftM2 (.) W.greedyView W.shift
 
 -- Width of the window border in pixels.
 myBorderWidth = 1
@@ -117,7 +117,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ ((modMask .|. shiftMask, xK_Return),
      spawn $ XMonad.terminal conf)
 
-  , ((modMask .|. shiftMask, xK_f),
+  , ((modMask .|. shiftMask, xK_m),
      spawn myFloatingTerminal)
 
   -- Lock the screen using command specified by myScreensaver.
@@ -354,8 +354,13 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 
 main = do
   -- xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs -d"
-  leftBar <- spawnPipe "dzen2 || ~/bin/dzen2 -fn 'Inconsolata-11' -x 0 -y -1 -w 800 -ta 'l'"
-  rightBar <- spawnPipe "conky -c ~/dotfiles/conky | `dzen2 || ~/bin/dzen2 -x 800 -y -1 -fn 'Inconsolata-11' -ta 'r'`"
+
+  -- Top:
+  xmonadBar <- spawnPipe "dzen2 || ~/bin/dzen2 -fn 'Inconsolata-10' -x 0 -y 0 -ta 'l' -dock -bg '#000000' -fg '#ff00ff'"
+
+  -- Bottom:
+  slowBar <- spawnPipe "conky -c ~/dotfiles/conky_slow | `dzen2 || ~/bin/dzen2 -y -1 -fn 'Inconsolata-9' -ta 'l' -dock -bg '#000000' -fg '#ffffff' -x 0 -w 700`"
+  fastBar <- spawnPipe "conky -c ~/dotfiles/conky_fast | `dzen2 || ~/bin/dzen2 -y -1 -fn 'Inconsolata-9' -ta 'r' -dock -bg '#000000' -fg '#ffffff' -x 700`"
 
   xmonad $ defaults {
       -- logHook = dynamicLogWithPP $ xmobarPP {
@@ -368,7 +373,7 @@ main = do
           -- , ppWsSep = " "
           -- , ppSep = " | "
         -- }
-    logHook = myLogHook leftBar
+    logHook = myLogHook xmonadBar
       , manageHook = manageDocks <+> myManageHook
       -- , startupHook = setWMName "LG3D"
   
