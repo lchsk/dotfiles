@@ -27,7 +27,7 @@ myScreensaver = "i3lock -u -t"
 myScreenshot = "scrot"
 myRecompile = "killall conky dzen2 && xmonad --recompile; xmonad --restart; notify-send 'xmonad recompiled <3'"
 myRestart = "killall conky dzen2 && xmonad --restart; notify-send 'xmonad restarted <3'"
-myLauncher = "urxvt -e xstarter || urxvt -e ~/xstarter/bin/xstarter"
+myLauncher = "(which xstarter && urxvt -e xstarter) || urxvt -e ~/xstarter/bin/xstarter"
 
 myExtraWorkspaces = [
   (xK_a, "a"),
@@ -356,11 +356,11 @@ main = do
   -- xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs -d"
 
   -- Top:
-  xmonadBar <- spawnPipe "dzen2 -fn 'Inconsolata-10' -x 0 -y 0 -ta 'l' -dock -bg '#000000' -fg '#ff00ff'"
+  xmonadBar <- spawnPipe "dzen2 || ~/bin/dzen2 -fn 'Inconsolata-10' -x 0 -y 0 -ta 'l' -dock -bg '#000000' -fg '#ff00ff'"
 
   -- Bottom:
-  slowBar <- spawnPipe "conky -c ~/dotfiles/conky_slow | `dzen2 -y -1 -fn 'Inconsolata-9' -ta 'l' -dock -bg '#000000' -fg '#ffffff' -x 0 -w 700`"
-  fastBar <- spawnPipe "conky -c ~/dotfiles/conky_fast | `dzen2 -y -1 -fn 'Inconsolata-9' -ta 'r' -dock -bg '#000000' -fg '#ffffff' -x 700`"
+  slowBar <- spawnPipe "conky -c ~/dotfiles/conky_slow | `dzen2 || ~/bin/dzen2 -y -1 -fn 'Inconsolata-9' -ta 'l' -dock -bg '#000000' -fg '#ffffff' -x 0 -w 700`"
+  fastBar <- spawnPipe "conky -c ~/dotfiles/conky_fast | `dzen2 || ~/bin/dzen2 -y -1 -fn 'Inconsolata-9' -ta 'r' -dock -bg '#000000' -fg '#ffffff' -x 700`"
 
   xmonad $ defaults {
       -- logHook = dynamicLogWithPP $ xmobarPP {
