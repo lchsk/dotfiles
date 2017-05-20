@@ -17,4 +17,4 @@
 
 * tmux
 
-* zsh
+* zsh && oh-my-zsh

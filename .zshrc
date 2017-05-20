@@ -14,6 +14,8 @@ HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh_history
 
+export ZSH=~/.oh-my-zsh
+
 # Use modern completion system
 autoload -Uz compinit
 compinit

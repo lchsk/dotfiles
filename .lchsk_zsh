@@ -22,11 +22,12 @@ alias emt='emacs -Q -nw'
 
 # git
 
-alias gits='git status'
-alias gitc='git checkout'
-alias gitp='git pull --no-tags'
-alias gitf='git fetch --no-tags'
-alias glod='git log --graph --pretty="%Cgreen%h%Creset%Cblue%d%Creset %Cred%an%Creset: %s"'
+alias gs='git status'
+alias gc='git checkout'
+alias gcm='git commit'
+alias gp='git pull --no-tags'
+alias gf='git fetch --no-tags'
+alias glog='git log --graph --pretty="%Cgreen%h%Creset%Cblue%d%Creset %Cred%an%Creset: %s"'
 
 # python
 
@@ -40,13 +41,18 @@ export PYTHONDONTWRITEBYTECODE=true
 alias psa='ps aux | grep'
 alias kill9='kill -9'
 alias fff='xdg-open'
-alias xs='~/bin/xstarter/bin/xstarter'
+alias xs=xstarter
+alias v=viewnior
+alias gv=gwenview
+alias pac=sudo pacman
+alias pacs=sudo pacman -S
+alias hg='history | grep'
+
 export EDITOR="emacsclient"
 export TERM=xterm-256color
-
 export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
-export GOPATH=~/projects/go
+export GOPATH=~/git/go
 
 # Search history
 
@@ -56,6 +62,9 @@ zle -N down-line-or-beginning-search
 
 [[ -n "${key[Up]}"   ]] && bindkey "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
+
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
 
 # Remember recent directories
 
