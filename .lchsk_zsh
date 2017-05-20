@@ -44,9 +44,17 @@ alias fff='xdg-open'
 alias xs=xstarter
 alias v=viewnior
 alias gv=gwenview
-alias pac=sudo pacman
-alias pacs=sudo pacman -S
+alias pac='sudo pacman'
+alias pacs='sudo pacman -S'
 alias hg='history | grep'
+alias mv='echo nope!'
+alias mv!='/usr/bin/mv -i'
+
+alias cp='cp -n'
+
+alias rm='echo nope!'
+alias rmi='/usr/bin/rm -i'
+alias rm!='/usr/bin/rm'
 
 export EDITOR="emacsclient"
 export TERM=xterm-256color
@@ -86,3 +94,5 @@ setopt PUSHD_IGNORE_DUPS
 
 ## This reverts the +/- operators.
 setopt PUSHD_MINUS
+
+mkdir -p ~/.trash
