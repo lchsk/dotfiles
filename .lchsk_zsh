@@ -49,7 +49,7 @@ alias pacs='sudo pacman -S'
 alias hg='history | grep'
 
 alias mv='mv -i'
-alias cp='cp -n'
+alias cp='cp -i'
 alias rm='rm -i'
 
 export EDITOR="emacsclient"
