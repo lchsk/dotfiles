@@ -22,8 +22,8 @@ alias emt='emacs -Q -nw'
 
 # git
 
-alias gs='git status'
-alias gc='git checkout'
+alias gits='git status'
+alias gitc='git checkout'
 alias gcm='git commit'
 alias gp='git pull --no-tags'
 alias gf='git fetch --no-tags'
@@ -47,14 +47,10 @@ alias gv=gwenview
 alias pac='sudo pacman'
 alias pacs='sudo pacman -S'
 alias hg='history | grep'
-alias mv='echo nope!'
-alias mv!='/usr/bin/mv -i'
 
+alias mv='mv -i'
 alias cp='cp -n'
-
-alias rm='echo nope!'
-alias rmi='/usr/bin/rm -i'
-alias rm!='/usr/bin/rm'
+alias rm='rm -i'
 
 export EDITOR="emacsclient"
 export TERM=xterm-256color
