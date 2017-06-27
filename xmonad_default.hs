@@ -358,12 +358,11 @@ main = do
   -- xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs -d"
 
   -- Top:
-  -- xmonadBar <- spawnPipe "~/dotfiles/scripts/dzen2.sh -fn 'Inconsolata-10' -x 0 -y 0 -ta 'l' -dock -bg '#000000' -fg '#ff00ff'"
-  xmonadBar <- spawnPipe "`~/dotfiles/scripts/dzen2.sh` -fn 'Inconsolata-10' -x 0 -y 0 -ta 'l' -dock -bg '#000000' -fg '#ff00ff'"
+  xmonadBar <- spawnPipe "dzen2 || ~/bin/dzen2 -fn 'Inconsolata-10' -x 0 -y 0 -ta 'l' -dock -bg '#000000' -fg '#ff00ff'"
 
   -- Bottom:
-  slowBar <- spawnPipe "conky -c ~/dotfiles/conky_slow | `~/dotfiles/scripts/dzen2.sh` -y -1 -fn 'Inconsolata-9' -ta 'l' -dock -bg '#000000' -fg '#ffffff' -x 0 -w 700"
-  fastBar <- spawnPipe "conky -c ~/dotfiles/conky_fast | `~/dotfiles/scripts/dzen2.sh` -y -1 -fn 'Inconsolata-9' -ta 'r' -dock -bg '#000000' -fg '#ffffff' -x 700"
+  slowBar <- spawnPipe "conky -c ~/dotfiles/conky_slow | `dzen2 || ~/bin/dzen2 -y -1 -fn 'Inconsolata-9' -ta 'l' -dock -bg '#000000' -fg '#ffffff' -x 0 -w 700`"
+  fastBar <- spawnPipe "conky -c ~/dotfiles/conky_fast | `dzen2 || ~/bin/dzen2 -y -1 -fn 'Inconsolata-9' -ta 'r' -dock -bg '#000000' -fg '#ffffff' -x 700`"
 
   xmonad $ defaults {
       -- logHook = dynamicLogWithPP $ xmobarPP {
@@ -382,7 +381,7 @@ main = do
   
 }
 
-defaults = xfceConfig {
+defaults = defaultConfig {
     -- simple stuff
     terminal           = myTerminal,
     focusFollowsMouse  = myFocusFollowsMouse,
