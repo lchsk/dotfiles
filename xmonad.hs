@@ -145,6 +145,18 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. controlMask, xK_k),
      spawn "amixer -D pulse set Master 5%+")
 
+  -- (Spotify): Play/pause.
+  , ((0, 0x1008ff14),
+     spawn "~/dotfiles/thirdparty/sp play")
+
+  -- (Spotify): Previous
+  , ((0, 0x1008ff16),
+     spawn "~/dotfiles/thirdparty/sp prev")
+
+  -- (Spotify): Next
+  , ((0, 0x1008ff17),
+     spawn "~/dotfiles/thirdparty/sp next")
+
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
 
