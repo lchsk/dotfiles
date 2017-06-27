@@ -23,8 +23,8 @@ import XMonad.Config.Xfce
 
 myTerminal = "urxvt"
 myFloatingTerminal = "urxvt -name urxvtfloat --geometry 115x30"
-myScreensaver = "i3lock -u -t"
-myScreenshot = "scrot"
+myScreenLock = "slock"
+myScreenshot = "scrot 'screen_%Y_%m_%d_%T_$wx$h.png' -e 'mv $f ~/'"
 myRecompile = "killall conky dzen2 && xmonad --recompile; xmonad --restart; notify-send 'xmonad recompiled <3'"
 myRestart = "killall conky dzen2 && xmonad --restart; notify-send 'xmonad restarted <3'"
 myLauncher = "(which xstarter && urxvt -e xstarter) || urxvt -e ~/xstarter/bin/xstarter"
@@ -111,35 +111,26 @@ winKey = mod4Mask
 myModMask = winKey
 
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
-  ----------------------------------------------------------------------
-  -- Custom key bindings
-  --
 
   -- Start a terminal.  Terminal to start is specified by myTerminal variable.
   [ ((modMask .|. shiftMask, xK_Return),
      spawn $ XMonad.terminal conf)
 
+  -- Start a floating terminal. Size is defined in myFloatingTerminal variable.
   , ((modMask .|. shiftMask, xK_m),
      spawn myFloatingTerminal)
 
-  -- Lock the screen using command specified by myScreensaver.
+  -- Lock the screen
   , ((modMask .|. controlMask, xK_l),
-     spawn myScreensaver)
-
-  -- , ((modMask .|. controlMask, xK_o),
-     -- spawn "xmobar ~/.xmonad/xmobar.hs -d")
+     spawn myScreenLock)
 
   -- Spawn the launcher using command specified by myLauncher.
   -- Use this to launch programs without a key binding.
   , ((modMask, xK_p),
      spawn myLauncher)
 
-  -- Take a selective screenshot using the command specified by mySelectScreenshot.
-  --, ((modMask .|. shiftMask, xK_p),
-  --   spawn mySelectScreenshot)
-
   -- Take a full screenshot using the command specified by myScreenshot.
-  , ((modMask .|. controlMask .|. shiftMask, xK_p),
+  , ((modMask .|. controlMask, xK_s),
      spawn myScreenshot)
 
   -- Mute volume.
@@ -154,25 +145,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. controlMask, xK_k),
      spawn "amixer -D pulse set Master 5%+")
 
-  -- Audio previous.
-  , ((0, 0x1008FF16),
-     spawn "")
-
-  -- Play/pause.
-  , ((0, 0x1008FF14),
-     spawn "")
-
-  -- Audio next.
-  , ((0, 0x1008FF17),
-     spawn "")
-
-  -- Eject CD tray.
-  , ((0, 0x1008FF2C),
-     spawn "eject -T")
-
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
-  --
 
   -- Close focused window.
   , ((modMask .|. shiftMask, xK_c),
@@ -279,7 +253,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
       ]
 
 
-
 -- Mouse bindings
 --
 -- Focus rules
@@ -300,11 +273,8 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modMask, button3),
        (\w -> focus w >> mouseResizeWindow w))
-
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
   ]
 
--- myStartupHook = return ()
 myStartupHook = do
   setDefaultCursor xC_left_ptr
   setWMName "LG3D"
@@ -312,22 +282,11 @@ myStartupHook = do
 myLogHook h = dynamicLogWithPP $ defaultPP
 
     -- current workspace
-    { ppCurrent         = dzenColor black color1 . pad
+    { ppCurrent = dzenColor black color1 . pad
 
     -- workspaces which contain windows
-    , ppHidden          = dzenColor white black . pad
+    , ppHidden  = dzenColor white black . pad
 
-    -- other workspaces
-    -- , ppHiddenNoWindows = dzenColor "#606060" "" . pad
-
-    -- , ppLayout          = dzenColor "#ff00ff" "" . pad
-    -- , ppLayout = wrap "^ca(1,xdotool key super+space)" "^ca()" . dzenColor "#ff00ff" "" .
-              -- (\x -> case x of
-                  -- "tile" -> "^i(~/dotfiles/xbm/tile.xbm)"
-                  -- "mtile" -> "^i(~/dotfiles/xbm/tile.xbm) M"
-                  -- "btile" -> "^i(~/dotfiles/xbm/tile.xbm) B"
-                  -- "Full" -> "^i(/home//dotfiles/xbm/full.xbm)"
-                  -- )
     , ppLayout  = dzenColor color1 black . (\layout -> case layout of
       "Tall"            -> "[|]"
       "ThreeCol"        -> "[3]"
@@ -355,10 +314,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
     }
 
 main = do
-  -- xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs -d"
-
   -- Top:
-  -- xmonadBar <- spawnPipe "~/dotfiles/scripts/dzen2.sh -fn 'Inconsolata-10' -x 0 -y 0 -ta 'l' -dock -bg '#000000' -fg '#ff00ff'"
   xmonadBar <- spawnPipe "`~/dotfiles/scripts/dzen2.sh` -fn 'Inconsolata-10' -x 0 -y 0 -ta 'l' -dock -bg '#000000' -fg '#ff00ff'"
 
   -- Bottom:
@@ -366,20 +322,8 @@ main = do
   fastBar <- spawnPipe "conky -c ~/dotfiles/conky_fast | `~/dotfiles/scripts/dzen2.sh` -y -1 -fn 'Inconsolata-9' -ta 'r' -dock -bg '#000000' -fg '#ffffff' -x 700"
 
   xmonad $ defaults {
-      -- logHook = dynamicLogWithPP $ xmobarPP {
-      -- logHook = dynamicLogWithPP $ defaultPP {
-            -- ppOutput = hPutStrLn xmproc1
-          -- , ppTitle = xmobarColor xmobarTitleColor "" . shorten 100
-          -- , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-          -- , ppCurrent = xmobarColor "#ebac54" ""
-          -- , ppCurrent = xmobarColor "#ff00ff" ""
-          -- , ppWsSep = " "
-          -- , ppSep = " | "
-        -- }
     logHook = myLogHook xmonadBar
       , manageHook = manageDocks <+> myManageHook
-      -- , startupHook = setWMName "LG3D"
-  
 }
 
 defaults = xfceConfig {
@@ -401,4 +345,3 @@ defaults = xfceConfig {
     manageHook         = myManageHook,
     startupHook        = myStartupHook
 }
-
