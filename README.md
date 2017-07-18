@@ -5,6 +5,10 @@
 
 * xmonad
 
+* xfce4
+
+* xfce4-power-manager
+
 * dzen2
 
 * conky
@@ -36,7 +40,11 @@
 git clone https://github.com/lchsk/emacs.d ~/.emacs.d
 
 cp -r ~/dotfiles/.fonts ~/
+
 cp .Xresources .zshrc .lchsk_zsh .xinitrc .tmux.conf ~/
-Change user name in .Xresources and /.zshrc
+
+Change user name in .Xresources  /.zshrc slock.service
+
 xrdb -merge ~/.Xresources
+
 chsh -s `which zsh`
