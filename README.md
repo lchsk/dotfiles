@@ -13,6 +13,8 @@
 
 * conky
 
+* the_silver_searcher
+
 * urxvt
 
 * slock
