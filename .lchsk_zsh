@@ -47,6 +47,9 @@ alias gv=gwenview
 alias pac='sudo pacman'
 alias pacs='sudo pacman -S'
 alias hg='history | grep'
+octnw() {
+    octave --no-gui -q --eval "PS1('>> ')" --persist
+}
 
 alias mv='mv -i'
 alias cp='cp -i'
