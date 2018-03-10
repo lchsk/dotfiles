@@ -23,8 +23,8 @@ import XMonad.Config.Xfce
 
 myTerminal = "urxvt"
 myFloatingTerminal = "urxvt -name urxvtfloat --geometry 115x30"
-myScreenLock = "slock"
-myScreenshot = "scrot 'screen_%Y_%m_%d_%T_$wx$h.png' -e 'mv $f ~/'"
+myScreenLock = "~/dotfiles/scripts/lock_and_sleep.sh"
+myScreenshot = "scrot 'screen_%Y_%m_%d_%T_$wx$h.png' -e 'mkdir -p ~/screenshots/; mv $f ~/screenshots/; gwenview ~/screenshots/$f'"
 myRecompile = "killall conky dzen2 stalonetray && xmonad --recompile; xmonad --restart; notify-send 'xmonad recompiled <3'"
 myRestart = "killall conky dzen2 stalonetray && xmonad --restart; notify-send 'xmonad restarted <3'"
 myLauncher = "(which xstarter && urxvt -e xstarter) || urxvt -e ~/xstarter/bin/xstarter"
