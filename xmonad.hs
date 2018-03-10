@@ -27,7 +27,7 @@ myFloatingTerminal = "~/dotfiles/scripts/show_term.sh"
 myPythonTerminal = "~/dotfiles/scripts/show_python.sh"
 myScreenLock = "~/dotfiles/scripts/lock_and_sleep.sh"
 myScreenshot = "scrot 'screen_%Y_%m_%d_%T_$wx$h.png' -e 'mkdir -p ~/screenshots/; mv $f ~/screenshots/; gwenview ~/screenshots/$f'"
-myRecompile = "killall conky dzen2 stalonetray && xmonad --recompile; xmonad --restart; notify-send 'xmonad recompiled <3'"
+myRecompile = "killall conky dzen2 stalonetray && xmonad --recompile; xmonad --restart; notify-send 'xmonad recompiled!' -t 1000"
 myRestart = "killall conky dzen2 stalonetray && xmonad --restart; notify-send 'xmonad restarted <3'"
 myLauncher = "(which xstarter && urxvt -e xstarter) || urxvt -e ~/xstarter/bin/xstarter"
 
@@ -141,15 +141,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Mute volume.
   , ((modMask .|. controlMask, xK_m),
-     spawn "amixer -D pulse set Master toggle")
+     spawn "amixer -D pulse set Master toggle; notify-send `~/dotfiles/scripts/volume.sh` -t 1000")
 
   -- Decrease volume.
   , ((modMask .|. controlMask, xK_j),
-     spawn "amixer -D pulse set Master 5%-")
+     spawn "amixer -D pulse set Master 5%-; notify-send `~/dotfiles/scripts/volume.sh` -t 500")
 
   -- Increase volume.
   , ((modMask .|. controlMask, xK_k),
-     spawn "amixer -D pulse set Master 5%+")
+     spawn "amixer -D pulse set Master 5%+; notify-send `~/dotfiles/scripts/volume.sh` -t 500")
 
   -- Windows Bringer
   , ((modMask, xK_g), gotoMenu)
