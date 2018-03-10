@@ -31,7 +31,7 @@
 
 * zsh && oh-my-zsh
 
-* viewnior
+* viewnior && gwenview
 
 * scrot
 
@@ -50,7 +50,14 @@ cp -r ~/dotfiles/.fonts ~/
 
 cp .Xresources .zshrc .lchsk_zsh .xinitrc .tmux.conf ~/
 
-Change user name in .Xresources  /.zshrc slock.service
+Change user name in .Xresources
+
+/.zshrc
+
+Modify username and path:
+/etc/systemd/system/slock.service
+/etc/systemd/system/sleep.target.wants/slock.service
+slock.service
 
 xrdb -merge ~/.Xresources
 
