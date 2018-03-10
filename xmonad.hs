@@ -20,9 +20,11 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import XMonad.Layout.GridVariants
 import XMonad.Config.Xfce
+import XMonad.Actions.WindowBringer
 
 myTerminal = "urxvt"
-myFloatingTerminal = "urxvt -name urxvtfloat --geometry 115x30"
+myFloatingTerminal = "~/dotfiles/scripts/show_term.sh"
+myPythonTerminal = "~/dotfiles/scripts/show_python.sh"
 myScreenLock = "~/dotfiles/scripts/lock_and_sleep.sh"
 myScreenshot = "scrot 'screen_%Y_%m_%d_%T_$wx$h.png' -e 'mkdir -p ~/screenshots/; mv $f ~/screenshots/; gwenview ~/screenshots/$f'"
 myRecompile = "killall conky dzen2 stalonetray && xmonad --recompile; xmonad --restart; notify-send 'xmonad recompiled <3'"
@@ -120,6 +122,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. shiftMask, xK_m),
      spawn myFloatingTerminal)
 
+  -- Start a python shell term.
+  , ((modMask .|. shiftMask, xK_n),
+     spawn myPythonTerminal)
+
   -- Lock the screen
   , ((modMask .|. controlMask, xK_l),
      spawn myScreenLock)
@@ -144,6 +150,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Increase volume.
   , ((modMask .|. controlMask, xK_k),
      spawn "amixer -D pulse set Master 5%+")
+
+  -- Windows Bringer
+  , ((modMask, xK_g), gotoMenu)
+  , ((modMask, xK_b), bringMenu)
 
   -- (Spotify): Play/pause.
   , ((0, 0x1008ff14),
