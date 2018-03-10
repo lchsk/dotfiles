@@ -4,7 +4,7 @@ Description=Lock the screen on go to sleep
 [Service]
 User=lchsk
 Environment=DISPLAY=:0
-ExecStart=/usr/bin/slock
+ExecStart=/home/lchsk/dotfiles/scripts/lock_and_sleep.sh
 
 [Install]
 WantedBy=sleep.target
