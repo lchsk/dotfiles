@@ -339,7 +339,7 @@ main = do
   -- Top:
   xmonadBar <- spawnPipe "`~/dotfiles/scripts/dzen2.sh` -fn 'Inconsolata-10' -x 0 -y 0 -ta 'l' -bg '#000000' -fg '#ff00ff'"
   tray <- spawnPipe "stalonetray -i 19 -geometry 10x1-0 --icon-gravity SE -bg '#000000'"
-  wallpaer <- spawnPipe "feh --bg-max ~/dotfiles/wallpapers --randomize"
+  -- wallpaer <- spawnPipe "feh --bg-max ~/dotfiles/wallpapers --randomize"
 
   -- Bottom:
   slowBar <- spawnPipe "conky -c ~/dotfiles/conky_slow | `~/dotfiles/scripts/dzen2.sh` -y -1 -fn 'Inconsolata-9' -ta 'l' -dock -bg '#000000' -fg '#ffffff' -x 0 -w 700"
