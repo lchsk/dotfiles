@@ -62,3 +62,6 @@ slock.service
 xrdb -merge ~/.Xresources
 
 chsh -s `which zsh`
+
+sudo apt install stalonetray conky dzen2
+
