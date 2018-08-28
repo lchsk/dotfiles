@@ -10,7 +10,7 @@ alias ls='ls --color=auto'
 alias ll='ls -alhF'
 alias la='ls -A'
 alias l='ls -CF'
-alias lt='ls -lrtah'
+alias lt='ls -lrta'
 
 # Emacs
 
@@ -47,9 +47,6 @@ alias gv=gwenview
 alias pac='sudo pacman'
 alias pacs='sudo pacman -S'
 alias hg='history | grep'
-octnw() {
-    octave --no-gui -q --eval "PS1('>> ')" --persist
-}
 
 alias mv='mv -i'
 alias cp='cp -i'
@@ -60,6 +57,10 @@ export TERM=xterm-256color
 export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
 export GOPATH=~/git/go
+
+octnw() {
+    octave --no-gui -q --eval "PS1('>> ')" --persist
+}
 
 # Search history
 
@@ -94,4 +95,8 @@ setopt PUSHD_IGNORE_DUPS
 ## This reverts the +/- operators.
 setopt PUSHD_MINUS
 
+###
+
 mkdir -p ~/.trash
+
+setxkbmap -layout pl -option ctrl:nocaps
