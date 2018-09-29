@@ -57,6 +57,7 @@ export TERM=xterm-256color
 export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:~/anaconda3/bin
+export PATH=$PATH:~/.local/bin
 export GOPATH=~/git/go
 
 octnw() {
