@@ -343,8 +343,9 @@ main = do
   bgColor <- spawnPipe "xsetroot -solid rgb:00/00/00"
 
   -- Bottom:
-  slowBar <- spawnPipe "conky -c ~/dotfiles/conky_slow | `~/dotfiles/scripts/dzen2.sh` -y -1 -fn 'Inconsolata-9' -ta 'l' -dock -bg '#000000' -fg '#ffffff' -x 0 -w 700"
-  fastBar <- spawnPipe "conky -c ~/dotfiles/conky_fast | `~/dotfiles/scripts/dzen2.sh` -y -1 -fn 'Inconsolata-9' -ta 'r' -dock -bg '#000000' -fg '#ffffff' -x 700"
+  conkyBar <- spawnPipe "conky -c ~/dotfiles/conky_one | `~/dotfiles/scripts/dzen2.sh` -y -1 -fn 'Inconsolata-10' -ta 'l' -dock -bg '#000000' -fg '#ffffff' -x 0"
+  -- slowBar <- spawnPipe "conky -c ~/dotfiles/conky_slow | `~/dotfiles/scripts/dzen2.sh` -y -1 -fn 'Inconsolata-9' -ta 'l' -dock -bg '#000000' -fg '#ffffff' -x 0 -w 400"
+  -- fastBar <- spawnPipe "conky -c ~/dotfiles/conky_fast | `~/dotfiles/scripts/dzen2.sh` -y -1 -fn 'Inconsolata-9' -ta 'l' -dock -bg '#000000' -fg '#ffffff' -x 400"
 
   xmonad $ defaults {
     logHook = myLogHook xmonadBar
