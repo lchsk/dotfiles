@@ -1,3 +1,5 @@
+# https://github.com/brndnmtthws/conky/wiki/Configuration-Variables
+
 update_interval 1
 net_avg_samples 2
 background no
@@ -26,11 +28,9 @@ ${freq} Mhz \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/mem.xbm)^fg() \
 ${memperc}% \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/stop.xbm)^fg() \
-${running_processes} \
-${processes} \
+p: ${running_processes}/${processes} \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/cat.xbm)^fg() \
-${running_threads} \
-${threads} \
+th: ${running_threads}/${threads} \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/diskette.xbm)^fg() \
 ${diskio_write} \
 ${diskio_read} \
