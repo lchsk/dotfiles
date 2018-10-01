@@ -139,6 +139,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. controlMask, xK_s),
      spawn myScreenshot)
 
+  , ((modMask .|. controlMask, xK_i),
+     spawn "(ps -ax | grep stalonetray | wc -l && pkill stalonetray) || exec stalonetray -i 19 -geometry 10x2+0 --icon-gravity SE -bg '#ff00ff'")
+
   -- Mute volume.
   , ((modMask .|. controlMask, xK_m),
      spawn "amixer -D pulse set Master toggle; notify-send `~/dotfiles/scripts/volume.sh` -t 1000")
@@ -336,11 +339,13 @@ myLogHook h = dynamicLogWithPP $ defaultPP
     }
 
 main = do
-  -- Top:
-  xmonadBar <- spawnPipe "`~/dotfiles/scripts/dzen2.sh` -fn 'Inconsolata-10' -x 0 -y 0 -w 900 -ta 'l' -bg '#000000' -fg '#ff00ff'"
-  tray <- spawnPipe "stalonetray -i 19 -geometry 10x1-0 --icon-gravity SE -bg '#000000'"
-  nmApplet <- spawnPipe "nm-applet"
+  -- Black background
   bgColor <- spawnPipe "xsetroot -solid rgb:00/00/00"
+
+  -- Top:
+  xmonadBar <- spawnPipe "`~/dotfiles/scripts/dzen2.sh` -fn 'Inconsolata-10' -x 0 -y 0 -w 900 -ta 'l' -dock -bg '#000000' -fg '#ff00ff'"
+  -- tray <- spawnPipe "stalonetray -i 19 -geometry 10x1+100 --icon-gravity SE -bg '#000000'"
+  nmApplet <- spawnPipe "nm-applet"
 
   -- Bottom:
   conkyBar <- spawnPipe "conky -c ~/dotfiles/conky_one | `~/dotfiles/scripts/dzen2.sh` -y -1 -fn 'Inconsolata-10' -ta 'l' -dock -bg '#000000' -fg '#ffffff' -x 0"
