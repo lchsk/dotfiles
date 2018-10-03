@@ -11,10 +11,16 @@ Xft*antialias: True
 Xft*hinting:   Full
 !-*-}
 
+! URxvt.perl-ext-common: ...,keyboard-select
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:search
+
+
 ! Set the style of the scrollbar: rxvt (default), plain, next, xterm
 URxvt.scrollstyle: rxvt
 ! To disable the scrollbar
 URxvt.scrollBar: false
+URxvt*saveLines: 9999
 
 ! The string will be interpreted as if typed into the shell as-is.
 ! In this example, printing will be disabled altogether.
@@ -22,7 +28,7 @@ URxvt.print-pipe: "cat > /dev/null"
 
 !-*- Perl extensions -*-
 URxvt.iso14755: False
-URxvt.perl-ext-common:default,clipboard,matcher
+URxvt.perl-ext-common:default,clipboard,matcher,keyboard-select,font-size
 ! URxvt.keysym.M-u:     perl:url-select:select_next
 ! URxvt.url-launcher:   /usr/bin/firefox
 URxvt.underlineURLs:  True
@@ -65,3 +71,10 @@ URxvt.clipboard.autocopy: true
 *color15: #efefef
 
 
+
+URxvt.keysym.Control-equal: font-size:increase
+URxvt.keysym.Control-minus: font-size:decrease
+! URxvt.keysym.C-S-equal:   font-size:incglobal
+! URxvt.keysym.C-S-minus: font-size:decglobal
+! URxvt.keysym.C-equal:  font-size:reset
+! URxvt.keysym.C-slash:  font-size:show
