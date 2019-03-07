@@ -154,6 +154,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask .|. controlMask, xK_k),
      spawn "amixer -D pulse set Master 5%+; notify-send `~/dotfiles/scripts/volume.sh` -t 500")
 
+  -- Brightness
+  , ((modMask .|. controlMask, xK_h),
+     spawn "xbacklight -inc 10; notify-send `~/dotfiles/scripts/brightness.sh` -t 500")
+  , ((modMask .|. controlMask, xK_g),
+     spawn "xbacklight -dec 10; notify-send `~/dotfiles/scripts/brightness.sh` -t 500")
+
   -- Windows Bringer
   , ((modMask, xK_g), gotoMenu)
   , ((modMask, xK_b), bringMenu)
