@@ -1,16 +1,16 @@
-conky.config = {
-	update_interval = 1,
-	net_avg_samples = 2,
-	background = false,
-	out_to_console = true,
-	out_to_x = false,
-	override_utf8_locale = true,
-	total_run_times = 0,
-	double_buffer = true,
-	format_human_readable = true,
-};
+# https://github.com/brndnmtthws/conky/wiki/Configuration-Variables
 
-conky.text = [[
+update_interval 1
+net_avg_samples 2
+background no
+out_to_console yes
+out_to_x no
+override_utf8_locale yes
+total_run_times 0
+double_buffer yes
+format_human_readable yes
+
+TEXT
 ${time %H:%M} \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/clock.xbm)^fg() \
 ${time %a %d/%m} \
@@ -37,4 +37,3 @@ ${diskio_read} \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/net_down_03.xbm)^fg() \
 ${execi 9 /bin/bash -e ~/dotfiles/scripts/net_speed.sh} \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/net_up_03.xbm)^fg() \
-]];
