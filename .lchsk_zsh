@@ -58,6 +58,7 @@ export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:~/anaconda3/bin
 export PATH=$PATH:~/.local/bin
+export PATH=$PATH:~/git/go/bin
 export GOPATH=~/git/go
 
 octnw() {
