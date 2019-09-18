@@ -16,21 +16,25 @@ ${time %H:%M} \
 ${time %a %d/%m} \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/diskette.xbm)^ca()^fg() \
 ${fs_free} \
-^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/bat_full_01.xbm)^ca()^fg() \
+^fg(\#11eeaa)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/bat_full_01.xbm)^ca()^fg() \
 ${execi 300 ~/dotfiles/scripts/battery.sh} \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/pacman.xbm)^ca()^fg() \
 ${uptime_short} \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/spkr_01.xbm)^fg() \
 ${execi 3 ~/dotfiles/scripts/volume.sh} \
-^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/cpu.xbm)^fg() \
+^fg(\#ee00aa)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/cpu.xbm)^fg() \
 ${cpu}% \
 ${freq} Mhz \
-^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/mem.xbm)^fg() \
+^fg(\#55ff11)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/mem.xbm)^fg() \
 ${memperc}% \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/stop.xbm)^fg() \
-p: ${running_processes}/${processes} \
+P: ${running_processes}/${processes} \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/cat.xbm)^fg() \
-th: ${running_threads}/${threads} \
+T: ${running_threads}/${threads} \
+^fg(\#eab700)^ca(1, ncmpcpp toggle)V:^fg() \
+${execi 300 ~/dotfiles/scripts/vpn.sh} \
+^fg(\#eab700)^ca(1, ncmpcpp toggle)C:^fg() \
+${execi 300 ~/dotfiles/scripts/cloud.sh} \
 ^fg(\#eab700)^ca(1, ncmpcpp toggle)^i(${exec echo $HOME}/dotfiles/xbm/diskette.xbm)^fg() \
 ${diskio_write} \
 ${diskio_read} \
