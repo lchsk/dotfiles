@@ -26,7 +26,10 @@ myTerminal = "urxvt"
 myFloatingTerminal = "~/dotfiles/scripts/show_term.sh"
 myPythonTerminal = "~/dotfiles/scripts/show_python.sh"
 myScreenLock = "~/dotfiles/scripts/lock_and_sleep.sh"
-myScreenshot = "scrot 'screen_%Y_%m_%d_%T_$wx$h.png' -e 'mkdir -p ~/screenshots/; mv $f ~/screenshots/; gwenview ~/screenshots/$f'"
+myScreenshotEditPng = "scrot 'screen_%Y_%m_%d_%T_$wx$h.png' -e 'mkdir -p ~/screenshots/; mv $f ~/screenshots/; gwenview ~/screenshots/$f'"
+myScreenshotSavePng = "scrot 'screen_%Y_%m_%d_%T_$wx$h.png' -e 'mkdir -p ~/screenshots/; mv $f ~/screenshots/'"
+myScreenshotEditJpg = "scrot 'screen_%Y_%m_%d_%T_$wx$h.jpg' -e 'mkdir -p ~/screenshots/; mv $f ~/screenshots/; gwenview ~/screenshots/$f'"
+myScreenshotSaveJpg = "scrot 'screen_%Y_%m_%d_%T_$wx$h.jpg' -e 'mkdir -p ~/screenshots/; mv $f ~/screenshots/'"
 myRecompile = "killall conky dzen2 stalonetray && xmonad --recompile; xmonad --restart; notify-send 'xmonad recompiled!' -t 1000"
 myRestart = "killall conky dzen2 stalonetray && xmonad --restart; notify-send 'xmonad restarted <3'"
 myLauncher = "(which xstarter && urxvt -e xstarter) || urxvt -e ~/xstarter/bin/xstarter"
@@ -137,7 +140,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Take a full screenshot using the command specified by myScreenshot.
   , ((modMask .|. controlMask, xK_s),
-     spawn myScreenshot)
+     spawn myScreenshotSavePng)
 
   , ((modMask .|. controlMask, xK_i),
      spawn "(ps -ax | grep stalonetray | wc -l && pkill stalonetray) || exec stalonetray -i 19 -geometry 10x2+0 --icon-gravity SE -bg '#ff00ff'")
@@ -159,6 +162,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "xbacklight -inc 10; notify-send `~/dotfiles/scripts/brightness.sh` -t 500")
   , ((modMask .|. controlMask, xK_g),
      spawn "xbacklight -dec 10; notify-send `~/dotfiles/scripts/brightness.sh` -t 500")
+
+  , ((modMask .|. controlMask, xK_o),
+     spawn "xrandr --auto")
 
   -- Windows Bringer
   , ((modMask, xK_g), gotoMenu)
