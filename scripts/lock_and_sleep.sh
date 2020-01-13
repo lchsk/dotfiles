@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-sleep 0.5; xset dpms force off; slock
+sleep 1; xset dpms force off; slock
