@@ -55,6 +55,13 @@ myExtraWorkspaces = [
   (xK_minus, "-"),
   (xK_equal, "="),
 
+  (xK_F1, "f1"),
+  (xK_F2, "f2"),
+  (xK_F3, "f3"),
+  (xK_F4, "f4"),
+  (xK_F5, "f5"),
+  (xK_F6, "f6"),
+
   (xK_f, "f")
   ]
 
@@ -140,7 +147,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Take a full screenshot using the command specified by myScreenshot.
   , ((modMask .|. controlMask, xK_s),
-     spawn myScreenshotSavePng)
+     spawn myScreenshotEditPng)
+
+  , ((modMask .|. controlMask, xK_d),
+     spawn myScreenshotSaveJpg)
 
   , ((modMask .|. controlMask, xK_i),
      spawn "(ps -ax | grep stalonetray | wc -l && pkill stalonetray) || exec stalonetray -i 19 -geometry 10x2+0 --icon-gravity SE -bg '#ff00ff'")
@@ -335,7 +345,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
     -- if a window on a hidden workspace needs my attention, color it so
     , ppUrgent          = dzenColor "#ff0000" "" . pad . dzenStrip
 
-    , ppVisible = dzenColor color1 black . pad
+    , ppVisible = dzenColor color2 black . pad
 
     -- shorten if it goes over 100 characters
     , ppTitle           = dzenColor white black . shorten 100
